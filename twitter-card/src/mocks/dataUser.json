@@ -1,0 +1,26 @@
+[
+  {
+    "userName": "midudev",
+    "name": "Miguel Ángel Durán",
+    "isFollow": true,
+    "id": "1"
+  },
+  {
+    "userName": "pheralb",
+    "name": "Pablo H.",
+    "isFollow": false,
+    "id": "2"
+  },
+  {
+    "userName": "PacoHdezs",
+    "name": "Paco Hdez",
+    "isFollow": true,
+    "id": "3"
+  },
+  {
+    "userName": "TMChein",
+    "name": "Tomas",
+    "isFollow": false,
+    "id": "4"
+  }
+]
