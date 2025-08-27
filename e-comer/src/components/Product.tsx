@@ -1,4 +1,4 @@
-import { useCartContext } from '@hooks/useCartContext'
+import { useCartContext } from '@/context/useCartContext'
 import type { ProductType } from '@/types'
 
 export function Product({ id, thumbnail, title, price }: ProductType) {

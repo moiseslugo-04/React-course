@@ -1,20 +1,19 @@
-import { useState } from 'react'
 import './App.css'
-import data from './mocks/products.json'
-import { ProductList } from './components/ProductList'
-import { useFilter } from './hooks/useFilter'
-import { useCart } from './hooks/useCart'
-import { Filters } from './components/Filters'
-import { CartContext } from './hooks/useCartContext'
-import { CartSummary } from './components/CartSummary'
-import { FilterContext } from './hooks/useFilterContext'
+import { ProductList } from '@/components/ProductList'
+import { useFilter } from '@/hooks/useFilter'
+import { useCart } from '@/hooks/useCart'
+import { Filters } from '@components/Filters'
+import { CartContext } from '@context/useCartContext'
+import { CartSummary } from '@components/CartSummary'
+import { FilterContext } from '@/context/useFilterContext'
+import { useProducts } from '@hooks/useProducts'
 function App() {
-  const [products] = useState(data?.products)
+  const { products } = useProducts()
   const filters = useFilter({ products })
   const cart = useCart()
   return (
-    <FilterContext value={filters}>
-      <div className='py-12 bg-slate-800 text-white flex flex-col gap-6'>
+    <div className='h-vh py-12 bg-slate-800 text-white flex flex-col gap-6'>
+      <FilterContext value={filters}>
         <Filters />
         <CartContext value={cart}>
           <div className='container mx-auto px-4 flex flex-col md:flex-row gap-8'>
@@ -26,8 +25,8 @@ function App() {
             </aside>
           </div>
         </CartContext>
-      </div>
-    </FilterContext>
+      </FilterContext>
+    </div>
   )
 }
 

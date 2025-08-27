@@ -4,6 +4,7 @@ import { useState } from 'react'
 export function useFilter({ products }: ProductListType) {
   const [filter, setFilter] = useState({ category: 'all', minPrice: 0 })
   const filteredProducts = products.filter((product: ProductType) => {
+    console.log(filter.minPrice)
     if (
       (product.price >= filter.minPrice && filter.category === 'all') ||
       filter.category === product.category

@@ -10,6 +10,11 @@ interface ProductType {
 interface ProductListType {
   products: ProductType[]
 }
+interface Category {
+  slug: string
+  name: string
+  url: string
+}
 
 //Reducer cart types
 type CartAction =
@@ -44,4 +49,5 @@ export type {
   FilterProps,
   CartContextType,
   FilterContextType,
+  Category,
 }

@@ -21,7 +21,8 @@
       "@/*": ["src/*"],
       "@hooks/*": ["src/hooks/*"],
       "@components/*": ["src/components/*"],
-      "@types/*": ["src/types/*"]
+      "@types/*": ["src/types/*"],
+      "@context/*": ["src/context/*"]
     },
 
     /* Linting */

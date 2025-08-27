@@ -1,6 +1,6 @@
 import type { ProductType } from '@/types'
 import { Product } from './Product'
-import { useFilterContext } from '@/hooks/useFilterContext'
+import { useFilterContext } from '@context/useFilterContext'
 export function ProductList() {
   const { filteredProducts } = useFilterContext()
   return (

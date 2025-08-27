@@ -1,8 +1,11 @@
-import { useFilterContext } from '@/hooks/useFilterContext'
+import { useCategories } from '@/hooks/useCategories'
+import { useFilterContext } from '@context/useFilterContext'
+import type { Category } from '@/types'
 import { useId } from 'react'
 export function Filters() {
   const filterCategoryID = useId() // unique ID in all my app
   const { filter, handleSetCategory, handleSetMinPrice } = useFilterContext()
+  const { categories } = useCategories()
   return (
     <header className='flex  flex-col  items-center gap-4'>
       <h1>Shopping cart </h1>
@@ -22,12 +25,15 @@ export function Filters() {
         <label className='flex gap-3'>
           Filter by category
           <select
+            className='bg-blue-900'
             name='category'
             id={filterCategoryID}
             onChange={handleSetCategory}
           >
             <option value='all'>All</option>
-            <option value='Apple'>Apple</option>
+            {categories.map((category: Category) => {
+              return <option value={category.slug}>{category.name}</option>
+            })}
           </select>
         </label>
       </form>

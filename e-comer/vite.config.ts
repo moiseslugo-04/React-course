@@ -11,6 +11,7 @@ export default defineConfig({
       '@hooks': resolve(__dirname, 'src/hooks'),
       '@components': resolve(__dirname, 'src/components'),
       '@types': resolve(__dirname, 'src/types'),
+      '@context': resolve(__dirname, 'src/context'),
     },
   },
 })
