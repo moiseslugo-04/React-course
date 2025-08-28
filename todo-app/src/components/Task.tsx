@@ -1,6 +1,6 @@
 import type { TaskType } from '@/types'
 import { useTaskContext } from '@/context/useTaskContext'
-
+import { Check } from 'lucide-react'
 export function Task({ title, id, completed }: TaskType) {
   const { deleteTask, updateTask } = useTaskContext()
   const handleDeleteTask = () => deleteTask(id)
@@ -8,17 +8,15 @@ export function Task({ title, id, completed }: TaskType) {
   return (
     <li
       key={id}
-      className='
-                  min-h-18
-                flex justify-between items-center gap-2 bg-blue-200/60 px-3 py-1 rounded-md '
+      className='min-h-18 flex justify-between items-center gap-2 px-3 py-1 rounded-md '
     >
       <label
         className={`
-                  cursor-pointer
-                      p-4 flex justify-center items-center border rounded-[50%] 
-                    border-gray-500
-                    ${completed ? 'bg-orange-600' : 'bg-white'}`}
+          w-8 h-8 cursor-pointer flex justify-center items-center
+          border rounded-[50%] border-gray-800
+          ${completed ? 'bg-orange-600 border-0 ' : 'p-3'}`}
       >
+        {completed && <Check size={20} color='#fff' />}
         <input
           onChange={handleToggleCompleted}
           className='hidden'
@@ -27,14 +25,18 @@ export function Task({ title, id, completed }: TaskType) {
           checked={completed}
         />
       </label>
-      <h2 className='font-bold text-center'>{title}</h2>
+      <h2
+        className={`font-bold text-center  ${
+          completed ? 'line-through text-gray-600' : ''
+        }`}
+      >
+        {title}
+      </h2>
       <button
         onClick={handleDeleteTask}
-        className='p-0.5 px-2 bg-red-400 rounded-[50%] flex justify-center items-center
-                  cursor-pointer 
-                  hover:bg-red-500 duration-200 ease-in '
+        className='p-0.5 px-2 font-bold text-gray-800   cursor-pointer'
       >
-        X
+        x
       </button>
     </li>
   )

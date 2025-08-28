@@ -1,5 +1,5 @@
 const saveStorage = (key: string, data: string) => {
-  localStorage.setItem(key, JSON.stringify(data))
+  localStorage.setItem(key, data)
 }
 const deleteFromLocal = (key: string) => localStorage.removeItem(key)
 const getFromLocal = (key: string) => localStorage.getItem(key)

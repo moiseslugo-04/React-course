@@ -8,12 +8,12 @@ function App() {
   const { handleSetFilter, filteredTask } = useFilter({ tasks: tasks.state })
   return (
     <div className='w-full h-dvh flex flex-col gap-4 bg-gradient-to-r from-blue-950  to-purple-950 p-4 '>
-      <Header handleSetFilter={handleSetFilter} />
-      <main className='container bg-white rounded-lg p-2 '>
-        <TaskContext value={tasks}>
+      <TaskContext value={tasks}>
+        <Header handleSetFilter={handleSetFilter} />
+        <main className='container bg-white rounded-lg p-2 '>
           <TaskList tasks={filteredTask} />
-        </TaskContext>
-      </main>
+        </main>
+      </TaskContext>
     </div>
   )
 }

@@ -1,17 +1,19 @@
 import { reducer, initialState } from '@/reducers/task'
 import { getTask } from '@/services/todo'
-import type { TaskType } from '@/types'
 import { saveStorage } from '@/utils/helperStorage'
 import { useEffect, useReducer, useState } from 'react'
 const API_URL = 'https://jsonplaceholder.typicode.com/todos?_limit=10'
-
+const initializer = () => {
+  const stored = localStorage.getItem('tasks')
+  return stored ? JSON.parse(stored) : initialState
+}
 export function useTasks() {
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const [state, dispatch] = useReducer(reducer, initialState, initializer)
   const [error, setError] = useState<null | string>(null)
   const [loading, setLoading] = useState(false)
-
   useEffect(() => {
     const getTodoList = async () => {
+      if (state.length > 0) return
       setLoading(true)
       try {
         const result = await getTask(API_URL)
@@ -24,16 +26,17 @@ export function useTasks() {
       }
     }
     getTodoList()
-    //this is the short way
     return () => {}
-  }, [])
+  }, [state])
 
   useEffect(() => {
     saveStorage('tasks', JSON.stringify(state))
   }, [state])
-  type ID = number
-  const addTask = (task: TaskType) => dispatch({ type: 'ADD', payload: task })
-  const deleteTask = (id: ID) => dispatch({ type: 'DELETE', payload: { id } })
-  const updateTask = (id: ID) => dispatch({ type: 'UPDATE', payload: { id } })
+  const addTask = ({ title }: { title: string }) =>
+    dispatch({ type: 'ADD', payload: { title } })
+  const deleteTask = (id: number | string) =>
+    dispatch({ type: 'DELETE', payload: { id } })
+  const updateTask = (id: number | string) =>
+    dispatch({ type: 'UPDATE', payload: { id } })
   return { state, error, loading, addTask, deleteTask, updateTask }
 }
