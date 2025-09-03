@@ -13,4 +13,8 @@ type UserFormData = {
 	github: string;
 };
 
-export type { User, UserFormData, UserId, UserWithId };
+interface UpdateUserPayload {
+	id: UserId;
+	updates: Partial<User>;
+}
+export type { UpdateUserPayload, User, UserFormData, UserId, UserWithId };

@@ -1,7 +1,8 @@
-import userReducer from "@/features/users/slice";
+import userReducer from "@/features/users/userSlice";
 import { DEFAULT_STATE } from "@/utils/constants";
 import { configureStore } from "@reduxjs/toolkit";
 import { persistenceLocalState } from "./middlewares/localStorage";
+import { syncWithDatabase } from "./middlewares/syncWithDatabase";
 const store = configureStore({
 	reducer: { users: userReducer },
 	preloadedState: {
@@ -11,7 +12,9 @@ const store = configureStore({
 		})(),
 	},
 	middleware: (getDefaultMiddleware) => {
-		return getDefaultMiddleware().concat(persistenceLocalState);
+		return getDefaultMiddleware()
+			.concat(persistenceLocalState)
+			.concat(syncWithDatabase);
 	},
 });
 export type RootState = ReturnType<typeof store.getState>;

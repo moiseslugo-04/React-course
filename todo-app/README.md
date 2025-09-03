@@ -1,69 +1,81 @@
-# React + TypeScript + Vite
+Descripción General
+Desarrolla una aplicación de gestión de tareas (Todo App) utilizando React y los hooks que has aprendido. Deberás consumir una API JSON pública para obtener datos iniciales y demostrar tu comprensión de los hooks de React.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Tiempo estimado: 3-4 horas
 
-Currently, two official plugins are available:
+API a consumir
+Utiliza JSONPlaceholder, una API REST falsa para testing:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Obtener tareas: https://jsonplaceholder.typicode.com/todos
 
-## Expanding the ESLint configuration
+Límite: Obtén solo las primeras 10 tareas: https://jsonplaceholder.typicode.com/todos?_limit=10
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Requisitos Técnicos
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+1. Estructura del proyecto
+   Crea una aplicación React con Vite o Create React App
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+Organiza los componentes en una estructura clara
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+2. Funcionalidades requeridas
+   Mostrar lista de tareas obtenidas de la API
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Marcar/desmarcar tareas como completadas
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Agregar nuevas tareas
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Filtrar tareas (todas, completadas, pendientes)
+
+Eliminar tareas
+
+Persistencia local (guardar en localStorage)
+
+3. Hooks a utilizar (todos deben aparecer en tu solución)
+   useState: Para el estado local de componentes
+
+useEffect: Para cargar datos iniciales y persistir cambios
+
+useContext: Para compartir el estado de la aplicación (opcional pero valorado)
+
+useReducer: Para manejar el estado complejo de las tareas (opcional pero valorado)
+
+useCallback: Para memorizar funciones y evitar renders innecesarios
+
+useMemo: Para memorizar valores calculados (como tareas filtradas)
+
+useRef: Para manejar focos en inputs o acceder a elementos DOM
+
+useId: Para generar IDs únicos en formularios (accesibilidad)
+
+Criterios de evaluación
+Correcta implementación de los hooks de React
+
+Estructura de componentes clara y organizada
+
+Manejo adecuado del estado de la aplicación
+
+Uso apropiado de efectos secundarios
+
+Optimizaciones de rendimiento con useCallback y useMemo
+
+Código limpio y bien comentado
+
+Funcionalidad completa de la aplicación
+
+Entrega
+Crea un repositorio en GitHub con tu solución
+
+Incluye un README con instrucciones para ejecutar el proyecto
+
+Prepara la aplicación para ser desplegada (puedes usar Vercel, Netlify o GitHub Pages)
+
+Bonus (opcional pero valorado)
+Implementar temas claro/oscuro usando useContext
+
+Añadir animaciones o transiciones
+
+Implementar tests básicos
+
+Hacer la aplicación responsive
+
+Agregar validaciones a los formularios

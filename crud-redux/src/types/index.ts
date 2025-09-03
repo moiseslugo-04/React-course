@@ -1,17 +1,16 @@
 import type {
+	UpdateUserPayload,
 	User,
 	UserFormData,
 	UserId,
 	UserWithId,
 } from "@/features/users/types";
-import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface UserStoreContract {
 	users: UserWithId[];
-
-	// Actions
+	selectUser: (id: UserId) => void;
 	createUser: (user: User) => void;
-	updateUser?: (id: UserId, updates: PayloadAction<User>) => void;
+	updateUser?: (updates: UpdateUserPayload) => void;
 	removeUser: (id: string) => void;
 }
 

@@ -1,21 +1,21 @@
 const DEFAULT_STATE = [
 	{
 		id: "1",
-		name: "Yazman Rodriguez",
-		email: "yazmanito@gmail.com",
-		github: "yazmanito",
+		name: " Leonel Messi",
+		email: "messi@gmail.com",
+		github: "messi",
 	},
 	{
 		id: "2",
-		name: "John Doe",
-		email: "leo@gmail.com",
-		github: "leo",
+		name: "rollback example",
+		email: "mateo@gmail.com",
+		github: "matias",
 	},
 	{
 		id: "3",
-		name: "Haakon Dahlberg",
-		email: "haakon@gmail.com",
-		github: "midudev",
+		name: "Cristiano Ronaldo",
+		email: "ronaldo@gmail.com",
+		github: "cristiano",
 	},
 ];
 export { DEFAULT_STATE };

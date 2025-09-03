@@ -8,7 +8,7 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 import type { UserId } from "@/types";
-import { useUser } from "../hooks/useUser";
+import { useUser } from "../hooks/useUsers";
 export function ListOfUsers() {
 	const { users, removeUser } = useUser();
 	const handleRemoveUser = (id: UserId) => removeUser(id);
@@ -28,7 +28,10 @@ export function ListOfUsers() {
 				<TableBody>
 					{users?.map((user) => {
 						return (
-							<TableRow key={user.id}>
+							<TableRow
+								key={user.id}
+								className={`${user.id === "2" ? "bg-red-600/40" : ""}`}
+							>
 								<TableCell title={user.id} className="font-medium">
 									{user.id.slice(0, 5)}
 								</TableCell>

@@ -7,7 +7,7 @@ function App() {
   const tasks = useTasks()
   const { handleSetFilter, filteredTask } = useFilter({ tasks: tasks.state })
   return (
-    <div className='w-full h-dvh flex flex-col gap-4 bg-gradient-to-r from-blue-950  to-purple-950 p-4 '>
+    <div className='w-vw min-h-dvh flex flex-col  items-center gap-4 bg-gradient-to-r from-blue-950  to-purple-950 p-4 '>
       <TaskContext value={tasks}>
         <Header handleSetFilter={handleSetFilter} />
         <main className='container bg-white rounded-lg p-2 '>
