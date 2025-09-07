@@ -1,36 +1,55 @@
-import { DEFAULT_STATE } from "@/utils/constants";
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
-import type { UpdateUserPayload, User, UserId, UserWithId } from "./types";
-const initialState: UserWithId[] = DEFAULT_STATE;
-// TODO:implement the Fetch users from API
+import type { User, UserId, UserWithId, UsersTypeState } from "./types";
+import { fetchUsers } from "./userThunk";
+
+const initialState: UsersTypeState = {
+	users: [],
+	loading: false,
+	error: null,
+};
 const userSlice = createSlice({
 	name: "users",
 	initialState,
 	reducers: {
-		addToUser: (store, action: PayloadAction<User>) => {
+		addUser: (state, action: PayloadAction<User>) => {
 			const id = crypto.randomUUID();
-			store.push({ id, ...action.payload }); // we can use push because immer is used internally
+			const newUser = { ...action.payload, id };
+			state.users.push(newUser);
 		},
-		updateFromUser: (store, action: PayloadAction<UpdateUserPayload>) => {
-			const index = store.findIndex((user) => user.id === action.payload.id);
-			if (index !== -1) {
-				store[index] = { ...store[index], ...action.payload.updates };
-			}
+		updateUser: (state, action: PayloadAction<UserWithId>) => {
+			const userId = action.payload.id;
+			state.users = state.users.map((user) =>
+				user.id === userId ? action.payload : user,
+			);
 		},
-		removeFromUser: (store, actions: PayloadAction<UserId>) => {
-			return store.filter((user) => user.id !== actions.payload);
+		removeUser: (state, action: PayloadAction<UserId>) => {
+			state.users = state.users.filter(({ id }) => id !== action.payload);
 		},
-
-		rollbackUser: (store, action: PayloadAction<UserWithId>) => {
-			const isUserAlreadyDefined = store.some(
+		rollbackUser: (state, action: PayloadAction<UserWithId>) => {
+			const userExist = state.users.find(
 				(user) => user.id === action.payload.id,
 			);
-			if (!isUserAlreadyDefined) {
-				store.push(action.payload);
-			}
+			if (!userExist) state.users.push(action.payload);
 		},
 	},
+	extraReducers: (builder) => {
+		builder.addCase(fetchUsers.pending, (state) => {
+			state.loading = true;
+			state.error = null;
+		});
+
+		builder.addCase(fetchUsers.fulfilled, (state, action) => {
+			state.users = action.payload;
+			state.loading = false;
+		});
+
+		builder.addCase(fetchUsers.rejected, (state, action) => {
+			state.loading = false;
+			state.error = action.payload ?? "Unknown error";
+		});
+	},
 });
-export default userSlice.reducer;
-export const { addToUser, removeFromUser, updateFromUser, rollbackUser } =
+
+export const { addUser, updateUser, removeUser, rollbackUser } =
 	userSlice.actions;
+export default userSlice.reducer;

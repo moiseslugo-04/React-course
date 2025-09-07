@@ -1,21 +1,12 @@
-import { useSelector } from "@/store/hooks";
 import type { AppDispatch } from "@/store/store";
-import type { User, UserId, UserStoreContract } from "@/types";
 import { useDispatch } from "react-redux";
-import { selectAllUsers, selectUserById } from "../selectors";
-import type { UpdateUserPayload } from "../types";
-import { addToUser, removeFromUser, updateFromUser } from "../userSlice";
-export function useUser(): UserStoreContract {
+import type { User, UserId, UserWithId } from "../types";
+import { addUser, removeUser, updateUser } from "../userSlice";
+export function useUsers() {
 	const dispatch: AppDispatch = useDispatch();
-	//Selectors
-	const users = useSelector((state) => selectAllUsers(state));
-	const selectUser = (id: UserId) =>
-		useSelector((state) => selectUserById(state, id));
-
-	// actions
-	const removeUser = (id: UserId) => dispatch(removeFromUser(id));
-	const createUser = (user: User) => dispatch(addToUser(user));
-	const updateUser = (updates: UpdateUserPayload) =>
-		dispatch(updateFromUser(updates));
-	return { users, removeUser, createUser, selectUser, updateUser };
+	//actions
+	const createUser = (user: User) => dispatch(addUser(user));
+	const updateUserFrom = (user: UserWithId) => dispatch(updateUser(user));
+	const removeUserFom = (userId: UserId) => dispatch(removeUser(userId));
+	return { createUser, updateUserFrom, removeUserFom };
 }

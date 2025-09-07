@@ -1,20 +1,31 @@
+type UserId = string;
 interface User {
 	name: string;
 	email: string;
-	github: String;
+	github: string;
 }
-type UserId = string;
 interface UserWithId extends User {
 	id: UserId;
 }
-type UserFormData = {
-	name: string;
-	email: string;
-	github: string;
-};
 
-interface UpdateUserPayload {
-	id: UserId;
-	updates: Partial<User>;
+interface UserFromDB {
+	id: string;
+	name: string;
+	username: string;
+	email: string;
 }
-export type { UpdateUserPayload, User, UserFormData, UserId, UserWithId };
+interface UsersTypeState {
+	users: UserWithId[];
+	loading: boolean;
+	error: string | null;
+}
+
+type resultType = "ok" | "error" | null;
+export type {
+	resultType,
+	User,
+	UserFromDB,
+	UserId,
+	UsersTypeState,
+	UserWithId,
+};

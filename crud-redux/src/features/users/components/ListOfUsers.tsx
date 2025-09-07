@@ -7,11 +7,23 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import type { UserId } from "@/types";
-import { useUser } from "../hooks/useUsers";
+import type { AppDispatch, RootState } from "@/store/store";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "sonner";
+import { useToggleModal } from "../hooks/useToggleModal";
+import type { UserId } from "../types";
+import { removeUser } from "../userSlice";
+import { fetchUsers } from "../userThunk";
+import { UpdateUserModal } from "./UpdateUserModal";
 export function ListOfUsers() {
-	const { users, removeUser } = useUser();
-	const handleRemoveUser = (id: UserId) => removeUser(id);
+	const users = useSelector((state: RootState) => state.users.users);
+	const [userId, setUserId] = useState<UserId | null>(null);
+	const { isOpen, toggleModal } = useToggleModal();
+	const dispatch: AppDispatch = useDispatch();
+	useEffect(() => {
+		if (users.length <= 0) dispatch(fetchUsers());
+	}, []);
 	return (
 		<>
 			<Table>
@@ -33,7 +45,7 @@ export function ListOfUsers() {
 								className={`${user.id === "2" ? "bg-red-600/40" : ""}`}
 							>
 								<TableCell title={user.id} className="font-medium">
-									{user.id.slice(0, 5)}
+									{user.id}
 								</TableCell>
 								<TableCell>{user.name}</TableCell>
 								<TableCell>{user.email}</TableCell>
@@ -46,7 +58,13 @@ export function ListOfUsers() {
 									{user.github}
 								</TableCell>
 								<TableCell className="text-right ">
-									<button type="button">
+									<button
+										type="button"
+										onClick={() => {
+											setUserId(user.id);
+											toggleModal();
+										}}
+									>
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
 											fill="none"
@@ -64,7 +82,10 @@ export function ListOfUsers() {
 										</svg>
 									</button>
 									<button
-										onClick={() => handleRemoveUser(user.id)}
+										onClick={() => {
+											dispatch(removeUser(user.id));
+											toast.error("user delete with success");
+										}}
 										type="button"
 									>
 										<svg
@@ -91,6 +112,11 @@ export function ListOfUsers() {
 					})}
 				</TableBody>
 			</Table>
+			<UpdateUserModal
+				isOpen={isOpen}
+				userId={userId}
+				setIsOpen={toggleModal}
+			/>
 		</>
 	);
 }

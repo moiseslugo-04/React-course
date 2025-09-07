@@ -1,22 +1,38 @@
 import userReducer from "@/features/users/userSlice";
-import { DEFAULT_STATE } from "@/utils/constants";
 import { configureStore } from "@reduxjs/toolkit";
-import { persistenceLocalState } from "./middlewares/localStorage";
-import { syncWithDatabase } from "./middlewares/syncWithDatabase";
-const store = configureStore({
-	reducer: { users: userReducer },
-	preloadedState: {
-		users: (() => {
-			const persistedSate = localStorage.getItem("__redux_state__");
-			return persistedSate ? JSON.parse(persistedSate).users : DEFAULT_STATE;
-		})(),
+import { persistenceDataFromStorage } from "./middlewares/persistenceData";
+
+const preloadedState = (() => {
+	try {
+		const persistenceData = localStorage.getItem("__redux_state__");
+		if (!persistenceData) return undefined;
+
+		const parsedData = JSON.parse(persistenceData);
+
+		// Ensure the structure matches your store
+		return {
+			users: {
+				users: parsedData?.users?.users || [],
+				loading: parsedData?.users?.loading || false,
+				error: parsedData?.users?.error || null,
+			},
+		};
+	} catch (error) {
+		console.error("Error loading persisted state:", error);
+		return undefined; // Let Redux use the initial state from reducers
+	}
+})();
+export const store = configureStore({
+	reducer: {
+		users: userReducer,
 	},
+	preloadedState,
 	middleware: (getDefaultMiddleware) => {
-		return getDefaultMiddleware()
-			.concat(persistenceLocalState)
-			.concat(syncWithDatabase);
+		return getDefaultMiddleware().concat(persistenceDataFromStorage);
 	},
 });
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
-export { store };
+// types
+type RootState = ReturnType<typeof store.getState>;
+type AppDispatch = typeof store.dispatch;
+
+export type { AppDispatch, RootState };
