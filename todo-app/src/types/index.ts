@@ -3,7 +3,8 @@ interface TaskType {
   id: number | string
   completed: boolean
 }
-
+type LoadingType = boolean
+type ErrorType = string | null
 type TaskStateType = TaskType[]
 
 type ActionTypes =
@@ -13,4 +14,11 @@ type ActionTypes =
   | { type: 'UPDATE'; payload: { id: number | string } }
 type FilterType = 'all' | 'pending' | 'completed'
 
-export type { TaskType, FilterType, ActionTypes, TaskStateType }
+export type {
+  TaskType,
+  FilterType,
+  ActionTypes,
+  TaskStateType,
+  LoadingType,
+  ErrorType,
+}
